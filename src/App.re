@@ -19,23 +19,38 @@ let styles =
       "container":
         style(
           ~flex=1.,
-          ~justifyContent=`center,
+          ~justifyContent=`flexStart,
           ~alignItems=`center,
           ~backgroundColor="#F5FCFF",
+          ~padding=30.->dp,
           (),
         ),
-      "welcome":
-        style(~fontSize=20., ~textAlign=`center, ~margin=10.->dp, ()),
-      "instructions":
-        style(~textAlign=`center, ~color="#333333", ~marginBottom=5.->dp, ()),
-      "input": style(~borderWidth=1., ~borderColor="#000000", ~borderStyle=`solid, ~width=300.->dp, ())
+      "inputContainer":
+        style(
+          ~width=100.->pct,
+          ~flexDirection=`row,
+          ~justifyContent=`spaceBetween,
+          ~alignItems=`center,
+          (),
+        ),
+      "input": style(~width=70.->pct, ()),
+      "placeButton": style(~width=30.->pct, ()),
+      "listContainer": style(~width=100.->pct, ()),
     })
   );
 
+
 [@react.component]
 let app = () => {
-  let (inputState, setInputState) = React.useState(() => "");
+  let (placesState, setPlacesState) = React.useState(() => []);
+  let handleOnAdd = (place: string) =>
+    setPlacesState(_ => [place, ...placesState]);
+  let handleOneDelete = idx => setPlacesState(state => Util.remove_at(idx, state));
   <View style=styles##container>
-    <TextInput style=styles##input value=inputState onChangeText={text => setInputState(_ => text)} />
+    <PlaceInput onAdd=handleOnAdd />
+    <PlaceList
+      places=placesState
+      onDelete=handleOneDelete
+    />
   </View>;
-}
+};
