@@ -1,4 +1,5 @@
 open ReactNative;
+open Types;
 
 let styles =
   Style.(
@@ -26,18 +27,20 @@ let styles =
     })
   );
 
-
 [@react.component]
 let app = () => {
   let (placesState, setPlacesState) = React.useState(() => []);
-  let handleOnAdd = (place: string) =>
-    setPlacesState(_ => [place, ...placesState]);
-  let handleOneDelete = idx => setPlacesState(state => Util.remove_at(idx, state));
+  let handleOnAdd = (p: string) =>
+    setPlacesState(_ =>
+      [
+        place(~key=Random.int(1000000), ~name=p, ~image=""),
+        ...placesState,
+      ]
+    );
+  let handleOneDelete = idx =>
+    setPlacesState(state => Util.remove_at(idx, state));
   <View style=styles##container>
     <PlaceInput onAdd=handleOnAdd />
-    <PlaceList
-      places=placesState
-      onDelete=handleOneDelete
-    />
+    <PlaceList places=placesState onDelete=handleOneDelete />
   </View>;
 };
