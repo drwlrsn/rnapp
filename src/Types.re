@@ -2,5 +2,5 @@
 type place = {
   key: int,
   name: string,
-  image: string,
+  image: ReactNative.Image.Source.t,
 };

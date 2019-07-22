@@ -10,7 +10,7 @@ type placeData = {
 };
 
 [@react.component]
-let make = (~places, ~onDelete) =>
+let make = (~places, ~onSelect) =>
   <FlatList
     style=styles##listContainer
     data={List.mapi((idx, p) => placeData(~id=idx, ~p=p), places)->Array.of_list}
@@ -19,6 +19,6 @@ let make = (~places, ~onDelete) =>
       <ListItem
         key={place##index->string_of_int}
         place=place##item->pGet
-        onPressed={_ => onDelete(place##item->idGet)}
+        onPressed={_ => onSelect(place##item->idGet, place##item->pGet)}
       />}
   />;

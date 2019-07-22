@@ -27,7 +27,7 @@ let styles =
 let make = (~place, ~onPressed) =>
   <TouchableOpacity onPress=onPressed>
     <View style=styles##listItem>
-      <Image style=styles##placeImage source=Image.Source.fromRequired(Packager.require("./assets/saskatoon.jpg")) />
+      <Image style=styles##placeImage source=place->Types.imageGet />
       <Text> place->Types.nameGet->React.string </Text>
     </View>
   </TouchableOpacity>;

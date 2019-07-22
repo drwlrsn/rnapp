@@ -30,17 +30,32 @@ let styles =
 [@react.component]
 let app = () => {
   let (placesState, setPlacesState) = React.useState(() => []);
+  let (selectedPlace, setSelectedPlace) = React.useState(() => None);
   let handleOnAdd = (p: string) =>
     setPlacesState(_ =>
       [
-        place(~key=Random.int(1000000), ~name=p, ~image=""),
+        place(
+          ~key=Random.int(1000000),
+          ~name=p,
+          ~image=
+            Image.Source.fromRequired(
+              Packager.require("./assets/saskatoon.jpg"),
+            ),
+        ),
         ...placesState,
       ]
     );
-  let handleOneDelete = idx =>
+  let handleOnSelectPlace = (idx, place) =>
+    setSelectedPlace(_ => Some((idx, place)));
+  let handleOnClose = _ => setSelectedPlace(_ => None);
+  let handleOneDelete = idx => {
     setPlacesState(state => Util.remove_at(idx, state));
+    handleOnClose();
+  };
+
   <View style=styles##container>
+    <PlaceDetail selectedPlace onDelete=handleOneDelete onClose=handleOnClose />
     <PlaceInput onAdd=handleOnAdd />
-    <PlaceList places=placesState onDelete=handleOneDelete />
+    <PlaceList places=placesState onSelect=handleOnSelectPlace />
   </View>;
 };
