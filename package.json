@@ -5,14 +5,16 @@
   "scripts": {
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "reason-react-native-monorepo-trick": "symlink-dir ./node_modules/reason-react-native-monorepo/reason-react-native node_modules/reason-react-native && symlink-dir ./node_modules/reason-react-native-monorepo/bs-react-native-jsx3-compat node_modules/bs-react-native-jsx3-compat && symlink-dir ./node_modules/reason-react-native-monorepo/reason-react-navigation node_modules/reason-react-navigation",
+    "prepare": "yarn reason-react-native-monorepo-trick"
   },
   "dependencies": {
     "react": "16.8.6",
     "react-native": "0.60.3",
     "react-native-vector-icons": "^6.6.0",
     "reason-react": "^0.7.0",
-    "reason-react-native": "^0.60.0"
+    "reason-react-native-monorepo": "github:reasonml-community/reason-react-native"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -23,7 +25,8 @@
     "eslint": "^6.0.1",
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.55.0",
-    "react-test-renderer": "16.8.6"
+    "react-test-renderer": "16.8.6",
+    "symlink-dir": "^3.1.0"
   },
   "jest": {
     "preset": "react-native"
